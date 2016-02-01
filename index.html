@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script>
+function myFunction() {
+  var jdata = {};
+  jdata.data = $("#data1").val();
+  
+  $.ajax({
+        url: 'http://192.168.93.24:8081/data',
+        data: jdata, //'{"data": "Hehehe"}',
+        type: 'POST',
+//        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        success: function (data) {
+            var ret = jQuery.parseJSON(data);
+            $('#demo').html(JSON.stringify(ret.body.results[0].data))
+            //alert( JSON.stringify(ret.body))
+            console.log('Success: ')
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+            $('#demo').html('Error connecting to the server-[' + error.message + ']');
+        },
+    });
+}
+</script>
+</head>
+
+<body>
+
+<h1>My Web Page</h1>
+
+<p id="demo">A Paragraph</p>
+
+<button type="button" onclick="myFunction()">Try it</button>
+<input type="text" id="data1" value="1122dd"/>
+</body>
+</html>
