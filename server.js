@@ -17,6 +17,9 @@ app.get('/listUsers', function (req, res) {
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/' + 'index.html');
 })
+app.get('/index2.html', function(req, res) {
+  res.sendFile(__dirname + '/' + 'index2.html');
+})
 
 app.post('/data', urlencodedParser, function(req, res) {
 
@@ -31,9 +34,8 @@ app.post('/data', urlencodedParser, function(req, res) {
   function runCypherQuery(query, params, callback) {
   request.post({
       uri: httpUrlForTransaction,
-      json: {statements: [{statement: query, parameters: params}]},
-      auth:{user:'neo4j', pass:'password'},
-      resultDataContents:['row', 'graph']
+      json: {statements: [{statement: query, parameters: params, resultDataContents:['graph'],includeStats:false  }]},
+      auth:{user:'neo4j', pass:'password'}
     },
     function (err, body) {
       callback(err, body);
@@ -42,7 +44,7 @@ app.post('/data', urlencodedParser, function(req, res) {
 
   runCypherQuery(
 // 'match(p:Person {name:"Joe Pantoliano"})-[r]-n return p,r,n ', 
- 'match path=(p:Person {name:"Joe Pantoliano"})-[r]-n return p,n,r,labels(p), labels(n)',
+ 'match (p:Person )-[r]-n return p,n,r limit 3',
     {name: req.body.data
     }, 
     function (err, resp) {
@@ -50,14 +52,52 @@ app.post('/data', urlencodedParser, function(req, res) {
         console.log(err);
       } 
       else {
-//        console.log(JSON.stringify(resp));
+        //console.log(JSON.stringify(resp));
+        var nodes = {}
+        var edges = {}
+
         //console.log(resp)
-        res.end(JSON.stringify(resp))
-      }  
+        resp.body.results[0].data.forEach( function(data) {
+          data.graph.nodes.forEach( function(node) {
+            if ( node.id in nodes) {
+              // do nothing
+            }
+            else {
+              nodes[node.id] = {data: node.properties}
+              nodes[node.id].data.id = node.id
+              nodes[node.id].data.labels = node.labels
+              nodes[node.id].position = {'x':100, 'y':100}
+            }
+          })
+          data.graph.relationships.forEach( function(edge) {
+            if (edge.id in edges) {
+              // do nothing
+            }
+            else {
+              edges[edge.id] = {data: edge.properties}
+              edges[edge.id].data.id = edge.id
+              edges[edge.id].data.labels = edge.type
+              edges[edge.id].data.source = edge.startNode
+              edges[edge.id].data.target = edge.endNode
+            }
+          })
+        })
+        var r = {elements: [] }
+        for( var i in nodes) {
+          r.elements.push(nodes[i])
+        }
+        for( var i in edges) {
+          r.elements.push(edges[i])
+        }
+        console.log( JSON.stringify(r))
+//        console.log( JSON.stringify(edges))
+        res.end(JSON.stringify(r))
+
+     }  
     }); 
 })
 
-  var server = app.listen(8081,'192.168.93.24', function() {
+  var server = app.listen(8081,'10.21.72.137', function() {
   var host = server.address().address;
   var port = server.address().port;
 
