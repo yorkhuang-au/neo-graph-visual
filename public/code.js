@@ -165,12 +165,12 @@ $(function(){ // on dom ready
             height: 8
           }
         },
-        show: 'mouseover',
-        hide: 'mouseout'
+        show: {when: {event: 'mouseover'}},
+        hide: {when: {event: 'mouseout'}}
       });
     });
   }
-
+/*
   cy.nodes().forEach(function(n){
     var g = n.data('name');
 
@@ -204,7 +204,7 @@ $(function(){ // on dom ready
       }
     });
   });
-
+*/
   $('#config-toggle').on('click', function(){
     $('body').toggleClass('config-closed');
 
