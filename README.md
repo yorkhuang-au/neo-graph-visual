@@ -1,4 +1,4 @@
-# test-js-neo
+# neo-graph-visual
 
 This project is to create a graph visualization web site using the following technologies. 
 
