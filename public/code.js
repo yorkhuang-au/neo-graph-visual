@@ -112,7 +112,7 @@ $(function(){ // on dom ready
 
     $button.on('click', function() {
       $.ajax({
-        url: 'http://10.21.72.137:8081/data',
+        url: 'http://192.168.93.24:8081/data',
      //   data: {}, 
         type: 'POST',
         success: function (data) {

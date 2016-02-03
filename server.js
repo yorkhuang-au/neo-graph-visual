@@ -97,7 +97,7 @@ app.post('/data', urlencodedParser, function(req, res) {
     }); 
 })
 
-  var server = app.listen(8081,'10.21.72.137', function() {
+  var server = app.listen(8081,'192.168.93.24', function() {
   var host = server.address().address;
   var port = server.address().port;
 
