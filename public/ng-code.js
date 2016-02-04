@@ -99,7 +99,7 @@ $(function(){
 '<p class="ac-milk"><i class="fa fa-angle-double-right"></i>CCC</p>'+
 '<p class="ac-country"><i class="fa fa-map-marker"></i>DDD</p>'+
 '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="https://duckduckgo.com/?q={{name}}">More information</a></p>'
-    $('#info').html( infoTemplate( node.data() ) /*JSON.stringify(node.data)*/ notes).show();
+    $('#info').html( infoTemplate( node.data() ) /*JSON.stringify(node.data)*/ ).show();
   }
   
   function hideNodeInfo(){
