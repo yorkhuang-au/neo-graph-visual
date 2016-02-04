@@ -92,7 +92,7 @@ $(function(){
   }
 
   function showNodeInfo( node ){
-    $('#info').html( infoTemplate( node.data() ) ).show();
+    $('#info').html( /*infoTemplate( node.data() )*/ JSON.stringify(node.data) ).show();
   }
   
   function hideNodeInfo(){
