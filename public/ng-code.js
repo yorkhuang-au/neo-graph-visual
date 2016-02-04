@@ -28,6 +28,8 @@ $(function(){
     '{{#if Country}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{Country}}</p>{{/if}}',
     '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="https://duckduckgo.com/?q={{name}}">More information</a></p>'
   ].join(''));
+  
+  infoTemplate = Handlebars.compile('<ul class="ac-node-type">  {{#each people}}   <li>{{this}}</li> {{/each}}</ul>')
 
   // when both graph export json and style loaded, init cy
   Promise.all([ graphP, styleP ]).then(initCy);
@@ -97,7 +99,7 @@ $(function(){
 '<p class="ac-milk"><i class="fa fa-angle-double-right"></i>CCC</p>'+
 '<p class="ac-country"><i class="fa fa-map-marker"></i>DDD</p>'+
 '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="https://duckduckgo.com/?q={{name}}">More information</a></p>'
-    $('#info').html( /*infoTemplate( node.data() )*/ /*JSON.stringify(node.data)*/ notes).show();
+    $('#info').html( infoTemplate( node.data() ) /*JSON.stringify(node.data)*/ notes).show();
   }
   
   function hideNodeInfo(){
