@@ -141,7 +141,7 @@ body.calc #loading {
   margin: 0.25em;
   z-index: 999;
 }
-
+#neighbour,
 #reset,
 #filter {
   width: 3em;
@@ -157,6 +157,10 @@ body.calc #loading {
 
 #filter {
   right: 4em;
+}
+
+#neighbour {
+  right: 8em;
 }
 
 #reset i {

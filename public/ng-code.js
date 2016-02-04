@@ -20,7 +20,22 @@ $(function(){
     type: 'GET',
     dataType: 'text'
   });
-/*
+
+  Handlebars.registerHelper('toJson', function(data){
+    var str='';
+
+    for (var key in data ) {
+      //if (data.hasOwnProperty(key)) {
+      str += '<p class="ac-node-type"><i class="fa fa-info-circle"></i> ' + key + ': ' + data.key + '</p>'
+        //str =  str +  key //+ ': '+ data.key 
+      //}
+    }
+
+    return str; //JSON.stringify(obj ); //str;
+  });
+
+
+
   var infoTemplate = Handlebars.compile([
     '<p class="ac-name">[{{id}}]{{name}}</p>',
     '<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{NodeTypeFormatted}} {{#if Type}}({{Type}}){{/if}}</p>',
@@ -28,19 +43,16 @@ $(function(){
     '{{#if Country}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{Country}}</p>{{/if}}',
     '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="http://google.com/search?q={{name}}">More information</a></p>'
   ].join(''));
-*/
-  var infoTemplate = Handlebars.compile([]
-    '<p class="ac-name">[{{id}}]{{name}}</p>',
-    '<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{toJson data}} </p>'
+/*
+  var infoTemplate = Handlebars.compile([
+    //'<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{toJson this}} </p>'
+    '{{toJson this}}'
   ].join(''));
-  
+*/  
   // when both graph export json and style loaded, init cy
   Promise.all([ graphP, styleP ]).then(initCy);
 
-  Handlebars.registerHelper('toJson', function(obj){
-    return JSON.stringify(obj);
-  });
-  
+ 
   function highlight( node ){
     var nhood = node.closedNeighborhood();
 
@@ -102,7 +114,7 @@ $(function(){
 
   function showNodeInfo( node ){
     //$('#info').html( infoTemplate( node.data() ) ).show();
-	$('#info').html( infoTemplate( node.data ) ).show();
+	$('#info').html( infoTemplate( node.data() ) ).show();
   }
   
   function hideNodeInfo(){
@@ -231,6 +243,16 @@ $(function(){
     
     n.select();
     showNodeInfo( n );
+  });
+  
+  $('#neighbour').on('click', function(){
+    var eles = cy.$(':selected');
+    if( !eles.empty()) {
+      alert(eles.size());
+    }
+    else {
+      alert('Please select a node');
+    }
   });
   
   $('#reset').on('click', function(){
