@@ -18,9 +18,77 @@ $(function(){
 */  
   // when both graph export json and style loaded, init cy
   Promise.all([ graphP, styleP ]).then(initCy);
+//  initCy();
+
+
+function initCy( then ){
+  var loading = document.getElementById('loading');
+  var expJson = then[0];
+  var styleJson = then[1];
+  var elements = expJson.elements;
+
+  elements.nodes.forEach(function(n){
+    var data = n.data;
+    
+    data.NodeTypeFormatted = data.NodeType;
+    
+    if( data.NodeTypeFormatted === 'RedWine' ){
+    data.NodeTypeFormatted = 'Red Wine';
+    } else if( data.NodeTypeFormatted === 'WhiteWine' ){
+    data.NodeTypeFormatted = 'White Wine';
+    }
+    
+    n.data.orgPos = {
+    x: n.position.x,
+    y: n.position.y
+    };
+  });
+
+  loading.classList.add('loaded');
+
+  cy = window.cy = cytoscape({
+    container: document.getElementById('cy'),
+    layout: { name: 'preset', padding: layoutPadding },
+    style: styleJson,
+    elements: elements,
+    motionBlur: true,
+    selectionType: 'single',
+    boxSelectionEnabled: false,
+    autoungrabify: true
+  });
+
+  cy.on('free', 'node', function( e ){
+    var n = e.cyTarget;
+    var p = n.position();
+    
+    n.data('orgPos', {
+    x: p.x,
+    y: p.y
+    });
+  });
+
+  cy.on('tap', function(){
+    $('#search').blur();
+  });
+
+  cy.on('select', 'node', function(e){
+    var node = this;
+
+    highlight( node );
+    showNodeInfo( node );
+  });
+
+  cy.on('unselect', 'node', function(e){
+    var node = this;
+
+    clear();
+    hideNodeInfo();
+  });
+
+} // end of initCy
 
 <!-- insert menu.js here -->
-
+/*
 
   $('#search').typeahead({
     minLength: 2,
@@ -187,5 +255,5 @@ $(function(){
 
     cy.resize();
   });
-
+*/
 });
