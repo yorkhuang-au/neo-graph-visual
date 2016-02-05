@@ -89,6 +89,74 @@ $(function(){
 
 <!-- insert menu.js here -->
 
+  function highlight( node ){
+    var nhood = node.closedNeighborhood();
+
+    cy.batch(function(){
+      cy.elements().not( nhood ).removeClass('highlighted').addClass('faded');
+      nhood.removeClass('faded').addClass('highlighted');
+      
+      var npos = node.position();
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      
+      cy.stop().animate({
+      fit: {
+        eles: cy.elements(),
+        padding: layoutPadding
+      }
+      }, {
+      duration: layoutDuration
+      }).delay( layoutDuration, function(){
+      nhood.layout({
+        name: 'concentric',
+        padding: layoutPadding,
+        animate: true,
+        animationDuration: layoutDuration,
+        boundingBox: {
+        x1: npos.x - w/2,
+        x2: npos.x + w/2,
+        y1: npos.y - w/2,
+        y2: npos.y + w/2
+        },
+        fit: true,
+        concentric: function( n ){
+        if( node.id() === n.id() ){
+          return 2;
+        } else {
+          return 1;
+        }
+        },
+        levelWidth: function(){
+        return 1;
+        }
+      });
+      } );
+      
+    });
+  } // end highlight
+
+  function clear(){
+    cy.batch(function(){
+      cy.$('.highlighted').forEach(function(n){
+      n.animate({
+        position: n.data('orgPos')
+      });
+      });
+      
+      cy.elements().removeClass('highlighted').removeClass('faded');
+    });
+  } // end clear
+
+  function showNodeInfo( node ){
+  //$('#info').html( infoTemplate( node.data() ) ).show();
+    $('#info').html( infoTemplate( node.data() ) ).show();
+  }// end showNodeInfo
+
+  function hideNodeInfo(){
+    $('#info').hide();
+  }// end hideNodeInfo
+
   $('#search').typeahead({
     minLength: 2,
     highlight: true,
