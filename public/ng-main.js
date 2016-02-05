@@ -21,74 +21,73 @@ $(function(){
 //  initCy();
 
 
-function initCy( then ){
-  var loading = document.getElementById('loading');
-  var expJson = then[0];
-  var styleJson = then[1];
-  var elements = expJson.elements;
+  function initCy( then ){
+    var loading = document.getElementById('loading');
+    var expJson = then[0];
+    var styleJson = then[1];
+    var elements = expJson.elements;
 
-  elements.nodes.forEach(function(n){
-    var data = n.data;
-    
-    data.NodeTypeFormatted = data.NodeType;
-    
-    if( data.NodeTypeFormatted === 'RedWine' ){
-    data.NodeTypeFormatted = 'Red Wine';
-    } else if( data.NodeTypeFormatted === 'WhiteWine' ){
-    data.NodeTypeFormatted = 'White Wine';
-    }
-    
-    n.data.orgPos = {
-    x: n.position.x,
-    y: n.position.y
-    };
-  });
-
-  loading.classList.add('loaded');
-
-  cy = window.cy = cytoscape({
-    container: document.getElementById('cy'),
-    layout: { name: 'preset', padding: layoutPadding },
-    style: styleJson,
-    elements: elements,
-    motionBlur: true,
-    selectionType: 'single',
-    boxSelectionEnabled: false,
-    autoungrabify: true
-  });
-
-  cy.on('free', 'node', function( e ){
-    var n = e.cyTarget;
-    var p = n.position();
-    
-    n.data('orgPos', {
-    x: p.x,
-    y: p.y
+    elements.nodes.forEach(function(n){
+      var data = n.data;
+      
+      data.NodeTypeFormatted = data.NodeType;
+      
+      if( data.NodeTypeFormatted === 'RedWine' ){
+      data.NodeTypeFormatted = 'Red Wine';
+      } else if( data.NodeTypeFormatted === 'WhiteWine' ){
+      data.NodeTypeFormatted = 'White Wine';
+      }
+      
+      n.data.orgPos = {
+      x: n.position.x,
+      y: n.position.y
+      };
     });
-  });
 
-  cy.on('tap', function(){
-    $('#search').blur();
-  });
+    loading.classList.add('loaded');
 
-  cy.on('select', 'node', function(e){
-    var node = this;
+    cy = window.cy = cytoscape({
+      container: document.getElementById('cy'),
+      layout: { name: 'preset', padding: layoutPadding },
+      style: styleJson,
+      elements: elements,
+      motionBlur: true,
+      selectionType: 'single',
+      boxSelectionEnabled: false,
+      autoungrabify: true
+    });
 
-    highlight( node );
-    showNodeInfo( node );
-  });
+    cy.on('free', 'node', function( e ){
+      var n = e.cyTarget;
+      var p = n.position();
+      
+      n.data('orgPos', {
+      x: p.x,
+      y: p.y
+      });
+    });
 
-  cy.on('unselect', 'node', function(e){
-    var node = this;
+    cy.on('tap', function(){
+      $('#search').blur();
+    });
 
-    clear();
-    hideNodeInfo();
-  });
+    cy.on('select', 'node', function(e){
+      var node = this;
 
-} // end of initCy
+      highlight( node );
+      showNodeInfo( node );
+    });
+
+    cy.on('unselect', 'node', function(e){
+      var node = this;
+
+      clear();
+      hideNodeInfo();
+    });
+
+  } // end of initCy
 
 <!-- insert menu.js here -->
-/*
 
   $('#search').typeahead({
     minLength: 2,
@@ -255,5 +254,5 @@ function initCy( then ){
 
     cy.resize();
   });
-*/
+
 });

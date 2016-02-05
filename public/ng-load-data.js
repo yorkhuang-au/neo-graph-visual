@@ -6,7 +6,7 @@ function loadGraphData() {
     type: 'GET',
     dataType: 'json'
   });
-}
+} // end loadGraphData
 
 function loadStyleData() {
   // also get style via ajax
@@ -15,7 +15,7 @@ function loadStyleData() {
     type: 'GET',
     dataType: 'text'
   });
-}
+} // end loadStyleData
 
 function registerFuncs() {
   Handlebars.registerHelper('toJson', function(data){
@@ -30,7 +30,7 @@ function registerFuncs() {
 
     return str; //JSON.stringify(obj ); //str;
   });
-}
+} // end registerFuncs
 
 function getInfoHandleTemplate() {
   return Handlebars.compile([
@@ -40,7 +40,7 @@ function getInfoHandleTemplate() {
     '{{#if Country}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{Country}}</p>{{/if}}',
     '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="http://google.com/search?q={{name}}">More information</a></p>'
   ].join(''));
-}
+} // end getInfoHandleTemplate
 
 function highlight( node ){
   var nhood = node.closedNeighborhood();
@@ -87,9 +87,9 @@ function highlight( node ){
     } );
     
   });
-  }
+} // end highlight
 
-  function clear(){
+function clear(){
   cy.batch(function(){
     cy.$('.highlighted').forEach(function(n){
     n.animate({
@@ -99,15 +99,16 @@ function highlight( node ){
     
     cy.elements().removeClass('highlighted').removeClass('faded');
   });
-  }
+} // end clear
 
-  function showNodeInfo( node ){
-  //$('#info').html( infoTemplate( node.data() ) ).show();
+function showNodeInfo( node ){
+//$('#info').html( infoTemplate( node.data() ) ).show();
   $('#info').html( infoTemplate( node.data() ) ).show();
-  }
+}// end showNodeInfo
 
-  function hideNodeInfo(){
+function hideNodeInfo(){
   $('#info').hide();
-  }
+}// end hideNodeInfo
+
 
 
