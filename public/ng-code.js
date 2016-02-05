@@ -346,4 +346,11 @@ $(function(){
 
     content: $('#filters')
   });
+
+  $('#config-toggle').on('click', function(){
+    $('body').toggleClass('config-closed');
+
+    cy.resize();
+  });
+
 });
