@@ -54,6 +54,7 @@ $(function(){
 
 <!-- insert menu.js here -->
 
+
   $('#search').typeahead({
     minLength: 2,
     highlight: true,
