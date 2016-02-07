@@ -10,26 +10,27 @@
   <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">-->
   <link href="ng-style.css" rel="stylesheet">
 </head>
-<body>
+<body class="config-closed">
   <div id="cy"></div>
   <div id="loading">
     <span class="fa fa-refresh fa-spin"></span>
   </div>
-  
+
   <div id="search-wrapper">
     <input type="text" class="form-control" id="search" autofocus placeholder="Search">
   </div>
-  
+
   <div id="info">
   </div>
 
   <span class="fa fa-bars config-toggle" id="config-toggle"></span>
     <div id="config" class="config">
-      
-       <div class="preamble">
-         <span class="label label-info">Cola.js/Cytoscape.js demo</span>
 
-         <p>This is a demo of a graph of gene-gene interactions that uses Cola.js for layout and Cytoscape.js for its graph model and visualisation.  Use the controls below to alter the Cola.js layout parameters.</p>
+       <div class="preamble">
+         <span class="label label-info">Neo4j Graph</span>
+
+         <p>This is a visualization of a graph of interactions for Neo4j graph
+           database.</p>
          <p>
           Data by <a href="http://genemania.org">GeneMANIA</a><br/>
           Visualisation by <a href="http://js.cytoscape.org">Cytoscape.js</a><br/>
@@ -37,11 +38,11 @@
          </p>
        </div>
        <div class="param">
-         <button class="btn btn-default"><i class="fa fa-random"></i> </button>
+         <button id="loadall" class="btn btn-default"><i class="fa fa-random"></i> </button>
          <button class="btn btn-default"><i class="fa fa-long-arrow-down"></i> </button>
          <button id="reset" class="btn btn-default"><i class="fa fa-arrows-h"></i></button>
          <button id="filter" class="btn btn-default"><i class="fa fa-filter"></i></button>
- 
+
          <button id="neighbour" class="btn btn-default"><i class="fa fa-cogs"></i></button>
          <button id="filter2" class="btn btn-default"><i class="fa fa-filter"></i></button>
          <button id="neighbour2" class="btn btn-default"><i class="fa fa-cogs"></i></button>
@@ -88,23 +89,23 @@
 
   <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  
+
   <script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
   <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
-  
+
   <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
   <link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.3/cytoscape-qtip.js"></script>
-  
+
   <script src="http://cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.min.js"></script>
 
-  <script src="ng-load-data.js"></script>
+  <script src="ng-utils.js"></script>
   <script src="ng-main.js"></script>
 <!--  <script src="ng-menu.js"></script> -->
- <!-- 
+ <!--
   <button id="reset" class="btn btn-default"><i class="fa fa-arrows-h"></i></button>
   <button id="filter" class="btn btn-default"><i class="fa fa-filter"></i></button>
   <button id="neighbour" class="btn btn-default"><i class="fa fa-cogs"></i></button>
@@ -116,15 +117,15 @@
     <input id="na" type="checkbox" checked></input><label for="na">N/A</label><br />
     <input id="semi-hard" type="checkbox" checked></input><label for="semi-hard">Semi-hard</label><br />
     <input id="hard" type="checkbox" checked></input><label for="hard">Hard</label>
-    
+
     <hr />
-    
+
     <strong>Drink</strong>
     <input id="white" type="checkbox" checked></input><label for="white">White wine</label><br />
     <input id="red" type="checkbox" checked></input><label for="red">Red wine</label><br />
     <input id="cider" type="checkbox" checked></input><label for="cider">Cider</label>
   </div>
-  
+
   <a target="_blank" id="linkout" href="#">Reference <i class="fa fa-external-link"></i></a>
 </body>
 </html>

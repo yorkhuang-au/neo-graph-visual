@@ -22,7 +22,7 @@ app.get('/index2.html', function(req, res) {
 })
 
 app.post('/data', urlencodedParser, function(req, res) {
-
+  console.log('request')
 //  var response = {};
 //  response["msg"] = req.body.data; // = '{"msg": "OKasdfas"}';
 //  res.end(JSON.stringify(response));
@@ -43,14 +43,14 @@ app.post('/data', urlencodedParser, function(req, res) {
   }
 
   runCypherQuery(
-// 'match(p:Person {name:"Joe Pantoliano"})-[r]-n return p,r,n ', 
+// 'match(p:Person {name:"Joe Pantoliano"})-[r]-n return p,r,n ',
  'match (p:Person )-[r]-n return p,n,r limit 3',
     {name: req.body.data
-    }, 
+    },
     function (err, resp) {
       if (err) {
         console.log(err);
-      } 
+      }
       else {
         //console.log(JSON.stringify(resp));
         var nodes = {}
@@ -93,8 +93,8 @@ app.post('/data', urlencodedParser, function(req, res) {
 //        console.log( JSON.stringify(edges))
         res.end(JSON.stringify(r))
 
-     }  
-    }); 
+     }
+    });
 })
 
   var server = app.listen(8081,'0.0.0.0', function() {
@@ -103,4 +103,3 @@ app.post('/data', urlencodedParser, function(req, res) {
 
   console.log("%s:%s", host, port);
 })
-
