@@ -21,11 +21,14 @@ app.get('/index2.html', function(req, res) {
   res.sendFile(__dirname + '/' + 'index2.html');
 })
 
-app.post('/data', urlencodedParser, function(req, res) {
-  console.log('request')
+
+
+app.post('/loadall', urlencodedParser, function(req, res) {
+  console.log('loadall')
 //  var response = {};
 //  response["msg"] = req.body.data; // = '{"msg": "OKasdfas"}';
 //  res.end(JSON.stringify(response));
+/*
   var request =  require('request')
   var host = 'localhost'
   var port = 7474
@@ -41,10 +44,10 @@ app.post('/data', urlencodedParser, function(req, res) {
       callback(err, body);
     })
   }
-
+*/
   runCypherQuery(
 // 'match(p:Person {name:"Joe Pantoliano"})-[r]-n return p,r,n ',
- 'match (p:Person )-[r]-n return p,n,r limit 3',
+  'match (p)-[r]-(n) return p,r,n ',
     {name: req.body.data
     },
     function (err, resp) {
@@ -66,7 +69,20 @@ app.post('/data', urlencodedParser, function(req, res) {
               nodes[node.id] = {data: node.properties}
               nodes[node.id].data.id = node.id
               nodes[node.id].data.labels = node.labels
-              nodes[node.id].position = {'x':100, 'y':100}
+
+              var labels = node.labels
+
+              for( var i in node.labels) {
+                //console.log(label)
+                console.log(labels[i])
+                var label = labels[i]
+                nodes[node.id].data[ label] = 'true'
+
+//                nodes[node.id].data.labels[label] = "true";
+              }
+
+//              nodes[node.id].position = {'x':100, 'y':100}
+
             }
           })
           data.graph.relationships.forEach( function(edge) {
@@ -95,7 +111,24 @@ app.post('/data', urlencodedParser, function(req, res) {
 
      }
     });
-})
+  }) // end loadall
+
+  function runCypherQuery(query, params, callback) {
+    var request =  require('request')
+    var host = 'localhost'
+    var port = 7474
+    var httpUrlForTransaction = 'http://' + host + ':' + port + '/db/data/transaction/commit';
+    request.post(
+      {
+        uri: httpUrlForTransaction,
+        json: {statements: [{statement: query, parameters: params, resultDataContents:['graph'],includeStats:false  }]},
+        auth:{user:'neo4j', pass:'password'}
+      },
+      function (err, body) {
+        callback(err, body);
+      }
+    )
+  } // end runCypherQuery
 
   var server = app.listen(8081,'0.0.0.0', function() {
   var host = server.address().address;

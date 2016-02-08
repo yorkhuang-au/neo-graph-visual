@@ -20,28 +20,25 @@ function loadStyleData() {
 function registerFuncs() {
   Handlebars.registerHelper('toJson', function(data){
     var str='';
-
     for (var key in data ) {
-      //if (data.hasOwnProperty(key)) {
       str += '<p class="ac-node-type"><i class="fa fa-info-circle"></i> ' + key + ': ' + data.key + '</p>'
-        //str =  str +  key //+ ': '+ data.key 
-      //}
     }
-
-    return str; //JSON.stringify(obj ); //str;
+    return str;
   });
+
+  Handlebars.registerHelper('joinstr', function(items){
+    //return items.join('|');
+    return 'AAbb';
+  });
+
 } // end registerFuncs
 
 function getInfoHandleTemplate() {
   return Handlebars.compile([
     '<p class="ac-name">[{{id}}]{{name}}</p>',
-    '<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{NodeTypeFormatted}} {{#if Type}}({{Type}}){{/if}}</p>',
-    '{{#if Milk}}<p class="ac-milk"><i class="fa fa-angle-double-right"></i> {{Milk}}</p>{{/if}}',
-    '{{#if Country}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{Country}}</p>{{/if}}',
+    '<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{#if labels}}{{labels}}{{/if}}</p>',
+    '{{#if Person}}<p class="ac-milk"><i class="fa fa-angle-double-right"></i> {{born}}</p>{{/if}}',
+    '{{#if Movie}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{released}}</p>{{/if}}',
     '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="http://google.com/search?q={{name}}">More information</a></p>'
   ].join(''));
 } // end getInfoHandleTemplate
-
-
-
-
