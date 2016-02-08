@@ -230,7 +230,7 @@ $(function(){
 
   $('#loadall').on('click', function() {
     $.ajax({
-      url: 'http://10.21.72.137:8081/loadall',
+      url: 'http://192.168.93.24:8081/loadall',
    //   data: {},
       type: 'POST',
       success: function (data) {

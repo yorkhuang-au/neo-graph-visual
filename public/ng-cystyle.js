@@ -13,9 +13,9 @@ var ng_cystyle =
     "selector":"node",
     "style":
     {
+      "content":"data(name)",
       "width":"20",
       "height":"20",
-      "content":"data(name)",
       "font-size":"12px",
       "text-valign":"bottom",
       "text-halign":"center",
@@ -33,7 +33,7 @@ var ng_cystyle =
       "shape":"roundrectangle",
       "width":"30",
       "height":"20",
-      "content":"data(name)",
+      "content":"data(title)",
       "font-size":"8px",
       "text-valign":"bottom",
       "text-halign":"center",

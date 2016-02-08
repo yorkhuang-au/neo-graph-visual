@@ -34,11 +34,5 @@ function registerFuncs() {
 } // end registerFuncs
 
 function getInfoHandleTemplate() {
-  return Handlebars.compile([
-    '<p class="ac-name">[{{id}}]{{name}}</p>',
-    '<p class="ac-node-type"><i class="fa fa-info-circle"></i> {{#if labels}}{{labels}}{{/if}}</p>',
-    '{{#if Person}}<p class="ac-milk"><i class="fa fa-angle-double-right"></i> {{born}}</p>{{/if}}',
-    '{{#if Movie}}<p class="ac-country"><i class="fa fa-map-marker"></i> {{released}}</p>{{/if}}',
-    '<p class="ac-more"><i class="fa fa-external-link"></i> <a target="_blank" href="http://google.com/search?q={{name}}">More information</a></p>'
-  ].join(''));
+  return Handlebars.compile(infohbtemp);
 } // end getInfoHandleTemplate
