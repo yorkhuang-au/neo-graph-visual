@@ -22,9 +22,14 @@ app.get('/index2.html', function(req, res) {
 })
 
 
-
 app.post('/loadall', urlencodedParser, function(req, res) {
-  console.log('loadall')
+  var query ='match (p)-[r]-(n) return p,r,n limit 2'
+  runQuery1(req, res, query)
+});
+
+//app.post('/loadall', urlencodedParser, function(req, res) {
+function runQuery1( req, res, query) {
+  console.log(query)
 //  var response = {};
 //  response["msg"] = req.body.data; // = '{"msg": "OKasdfas"}';
 //  res.end(JSON.stringify(response));
@@ -47,8 +52,8 @@ app.post('/loadall', urlencodedParser, function(req, res) {
 */
   runCypherQuery(
 // 'match(p:Person {name:"Joe Pantoliano"})-[r]-n return p,r,n ',
-  'match (p)-[r]-(n) return p,r,n ',
-    {name: req.body.data
+    query,
+    {params: req.body
     },
     function (err, resp) {
       if (err) {
@@ -106,22 +111,31 @@ app.post('/loadall', urlencodedParser, function(req, res) {
           r.elements.push(edges[i])
         }
         console.log( JSON.stringify(r))
-//        console.log( JSON.stringify(edges))
+        console.log( JSON.stringify(edges))
         res.end(JSON.stringify(r))
 
      }
     });
-  }) // end loadall
+  } // end loadall
+
+
+  app.post('/neighbour', urlencodedParser, function(req, res) {
+    var query ='match (p)-[r]-(n) where id(p)=toInt({id}) return p,r,n'
+    runQuery1(req, res, query)
+  })
 
   function runCypherQuery(query, params, callback) {
     var request =  require('request')
     var host = 'localhost'
     var port = 7474
     var httpUrlForTransaction = 'http://' + host + ':' + port + '/db/data/transaction/commit';
+
+    console.log(params)
+
     request.post(
       {
         uri: httpUrlForTransaction,
-        json: {statements: [{statement: query, parameters: params, resultDataContents:['graph'],includeStats:false  }]},
+        json: {statements: [{statement: query, parameters: params.params, resultDataContents:['graph'],includeStats:false  }]},
         auth:{user:'neo4j', pass:'password'}
       },
       function (err, body) {

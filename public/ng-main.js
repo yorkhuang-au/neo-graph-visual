@@ -229,8 +229,9 @@ $(function(){
   });
 
   $('#loadall').on('click', function() {
+    //alert('asdfasdf')
     $.ajax({
-      url: 'http://10.21.72.137:8081/loadall',
+      url: 'http://192.168.93.23:8081/loadall',
    //   data: {},
       type: 'POST',
       success: function (data) {
@@ -249,8 +250,28 @@ $(function(){
 
   $('#neighbour').on('click', function(){
     var eles = cy.$(':selected');
+
     if( !eles.empty()) {
-      alert(eles.size());
+      alert(eles.id());
+
+      $.ajax({
+        url: 'http://192.168.93.23:8081/neighbour',
+        data:  {'id':  eles.id()// NOTE: nt
+       },
+        type: 'POST',
+        success: function (data) {
+          var ret = jQuery.parseJSON(data);
+          cy.add( ret.elements);
+          var layout = cy.makeLayout({ name: 'cose' });
+          layout.run();
+
+          console.log('Success: ')
+       },
+       error: function (xhr, status, error) {
+         alert('Error: ' + error.message);
+       }
+      });
+
     }
     else {
       alert('Please select a node');

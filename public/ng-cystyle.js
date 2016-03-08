@@ -27,13 +27,13 @@ var ng_cystyle =
     }
   },
   {
-    "selector":"node[?Movie]",
+    "selector":"node[?Addr]",
     "style":
     {
       "shape":"roundrectangle",
       "width":"30",
       "height":"20",
-      "content":"data(title)",
+      "content":"data(addr)",
       "font-size":"8px",
       "text-valign":"bottom",
       "text-halign":"center",
@@ -45,13 +45,85 @@ var ng_cystyle =
     }
   },
   {
-    "selector":"node[?Person]",
+    "selector":"node[?PerNo]",
+    "style":
+    {
+      "shape":"star",
+      "width":"20",
+      "height":"20",
+      "content":"data(perno)",
+      "font-size":"8px",
+      "text-valign":"bottom",
+      "text-halign":"center",
+      "background-color":"cyan",
+      "text-outline-color":"#222",
+      "color":"cyan",
+      "overlay-padding":"6px",
+      "z-index":"10"
+    }
+  },
+  {
+    "selector":"node[?Per]",
     "style":
     {
       "shape":"star",
       "width":"20",
       "height":"20",
       "content":"data(name)",
+      "font-size":"8px",
+      "text-valign":"bottom",
+      "text-halign":"center",
+      "background-color":"cyan",
+      "text-outline-color":"#222",
+      "color":"cyan",
+      "overlay-padding":"6px",
+      "z-index":"10"
+    }
+  },
+  {
+    "selector":"node[?OrgNo]",
+    "style":
+    {
+      "shape":"star",
+      "width":"20",
+      "height":"20",
+      "content":"data(orgno)",
+      "font-size":"8px",
+      "text-valign":"bottom",
+      "text-halign":"center",
+      "background-color":"cyan",
+      "text-outline-color":"#222",
+      "color":"cyan",
+      "overlay-padding":"6px",
+      "z-index":"10"
+    }
+  },
+  {
+    "selector":"node[?Org]",
+    "style":
+    {
+      "shape":"star",
+      "width":"20",
+      "height":"20",
+      "content":"data(name)",
+      "font-size":"8px",
+      "text-valign":"bottom",
+      "text-halign":"center",
+      "background-color":"cyan",
+      "text-outline-color":"#222",
+      "color":"cyan",
+      "overlay-padding":"6px",
+      "z-index":"10"
+    }
+  },
+  {
+    "selector":"node[?Xref]",
+    "style":
+    {
+      "shape":"star",
+      "width":"20",
+      "height":"20",
+      "content":"data(role)",
       "font-size":"8px",
       "text-valign":"bottom",
       "text-halign":"center",
